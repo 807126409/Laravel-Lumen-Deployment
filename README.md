@@ -1,2 +1,33 @@
 # Laravel-Lumen-Deployment
 Deployment of Laravel/Lumen project on different types of servers.
+Install Apache 2
+Now install Apache server. apache2 package is available within Ubuntu's software repositories, so we will install it using apt.
+apt-get install apache2
+Install MySQL
+apt-get install mysql-server
+mysql_secure_installation
+When connecting to the MySQL database, if you get an authentication error, kindly reset your root password using the following commands:
+mysql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YOUR_NEW_PASSWORD';
+Install PHP
+To install PHP you first need to add ppa:ondrej/php to the apt repository.
+add-apt-repository -y ppa:ondrej/php
+apt-get update
+Now use the following command to install php-fpm and php.
+apt-get install -y php-fpm
+apt-get install -y php
+Now install some necessary php extensions and restart the server, using the following commands:
+apt-get -y install curl php-pear php-mysql php-dev php-curl php-json php-mbstring php-gd php-intl php-xml php-imagick php-redis php-zip libapache2-mod-php
+systemctl restart apache2
+Install Git
+apt-get install git
+Install Composer
+cd ~
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+Visit Composer's Pubkeys page to get the latest SHA384 hash and replace it with LATEST_SHA384_HASH in the following command.
+php -r "if (hash_file('SHA384', 'composer-setup.php') === 'LATEST_SHA384_HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+Setup
+a2enmod rewrite
+systemctl restart apache2
+
